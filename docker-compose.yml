@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  hello-world-1:
+    image: hello-world
+    container_name: hello-world-1
+  hello-world-2:
+    image: hello-world
+    container_name: hello-world-2
+
+  hello-world-3:
+    image: hello-world
+    container_name: hello-world-3
+
+  hello-world-4:
+    image: hello-world
+    container_name: hello-world-4
+
+  hello-world-5:
+    image: hello-world
+    container_name: hello-world-5
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: sampledb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: exadel-devops-traning-web-app
+    container_name: exadel-devops-traning-web-app-container
+    ports:
+      - "8079:8080"
+    environment:
+      - DEVOPS_NAME=Anton
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
