@@ -39,6 +39,8 @@ services:
       dockerfile: Dockerfile
     image: exadel-devops-traning-web-app
     container_name: exadel-devops-traning-web-app-container
+    depends_on:
+      - db
     ports:
       - "8079:8080"
     environment:
